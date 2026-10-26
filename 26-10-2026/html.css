@@ -1,0 +1,29 @@
+import sqlite3
+
+conexao = sqlite3.connect("escola.db")
+cursor = conexao.cursor()
+
+# Crie a tabela alunos aqui
+cursor.execute("""
+    CREATE TABLE IF NOT EXISTS alunos (
+        nome TEXT,
+        idade INTEGER,
+        curso TEXT
+    )
+""")
+
+# Cadastre três alunos aqui
+cursor.execute("INSERT INTO alunos (nome, idade, curso) VALUES ('Ana Silva', 16, 'Informática')")
+cursor.execute("INSERT INTO alunos (nome, idade, curso) VALUES ('Carlos Souza', 17, 'Administração')")
+cursor.execute("INSERT INTO alunos (nome, idade, curso) VALUES ('Beatriz Lima', 16, 'Eletrônica')")
+
+conexao.commit()
+
+# Consulte e mostre os alunos aqui
+cursor.execute("SELECT * FROM alunos")
+registros = cursor.fetchall()
+
+for aluno in registros:
+    print(f"Nome: {aluno[0]} | Idade: {aluno[1]} | Curso: {aluno[2]}")
+
+conexao.close()
